@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Web Socket</title>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect('/');
+        function sendData() {
+            var msg = document.getElementById("send").value;
+            document.getElementById("write").innerHTML += " \n Send Data  " + msg;
+            socket.emit('data2', { message: msg});
+        }
+        socket.on('data', function (data) {
+            document.getElementById("write").innerHTML += " \nReceive Data  " + data.message;
+            console.log('Receive Data:', data.message);
+        });
+    </script>
+
+</head>
+
+<body>
+    <label>Send Message:</label>
+    <input type="text" id="send">
+    <button type="button" onclick="sendData()">SEND!</button>
+    <p id="write"></p>
+</body>
+
+</html>
